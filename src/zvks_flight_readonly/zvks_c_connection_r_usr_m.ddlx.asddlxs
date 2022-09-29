@@ -1,0 +1,78 @@
+@Metadata.layer: #CUSTOMER
+
+@UI.headerInfo: { typeName: 'Connection',
+                  typeNamePlural: 'Connections' }
+
+@Search.searchable: true
+
+annotate view ZVKS_C_Connection_R_Usr with
+{
+
+  @UI.facet: [
+  { id:     'Connection',
+  purpose:  #STANDARD,
+  type:     #IDENTIFICATION_REFERENCE,
+  label:    'Connection',
+  position: 10 } ,
+  { id:     'Flight',
+  purpose:  #STANDARD,
+  type:     #LINEITEM_REFERENCE,
+  label:    'Flight',
+  position: 20,
+  targetElement: '_Flight' }
+  ]
+
+  @UI.hidden: true
+  ConnectionUUID;
+  @UI.hidden: true
+  CarrierUUID;
+  @UI.hidden: true
+  AirportFromUUID;
+  @UI.hidden: true
+  AirportToUUID;
+
+  @UI.lineItem: [ { position: 10, label: 'Airline'} ]
+  @UI: { identification:[ { position: 10, label: 'Airline' } ]}
+  @EndUserText.quickInfo: 'Airline that operates the flight.'
+  @Search.defaultSearchElement: true
+  AirlineID;
+
+  @UI.lineItem: [ { position: 20, label:'Connection Number' } ]
+  @UI: { identification:[ { position: 20, label: 'Connection Number' } ] }
+  ConnectionID;
+
+  @UI.lineItem: [ { position: 30, label: 'Departure Airport Code' } ]
+  @UI.selectionField: [ { position: 10 } ]
+  @UI.identification:[ { position: 30, label: 'Departure Airport Code' } ]
+  @EndUserText.label: 'Departure Airport Code'
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZVKS_R_AirportVH', element: 'AirportID' } }]
+  @Search: { defaultSearchElement: true, fuzzinessThreshold: 0.7 }
+  DepartureAirport;
+
+  @UI: {
+  lineItem: [ { position: 40, label: 'Destination Airport Code'} ],
+  selectionField: [ { position: 20 }  ],
+  identification:[ { position: 40, label: 'Destination Airport Code' } ] }
+  @EndUserText.label: 'Destination Airport Code'
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZVKS_R_AirportVH' , element: 'AirportID' } }]
+  @Search.defaultSearchElement: true
+  @Search.fuzzinessThreshold: 0.7
+  DestinationAirport;
+
+  @UI.lineItem: [ { position: 50 , label: 'Departure Time'} ]
+  @UI: { identification:[ { position: 50, label: 'Departure Time' } ] }
+  DepartureTime;
+
+  @UI.lineItem: [ { position: 60 ,  label: 'Arrival Time' } ]
+  @UI: { identification:[ { position: 60, label: 'Arrival Time'  } ] }
+  ArrivalTime;
+
+  @UI.lineItem: [ { position: 70 ,  label: 'Distance' } ]
+  @UI: { identification:[ { position: 70, label: 'Distance' } ] }
+  Distance;
+
+  @Search.defaultSearchElement: true
+  _Flight;
+  //_Airline
+
+}

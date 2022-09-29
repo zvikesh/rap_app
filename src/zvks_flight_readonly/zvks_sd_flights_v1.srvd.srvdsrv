@@ -1,0 +1,5 @@
+@EndUserText.label: 'SD for ZVKS_C_Connection_R_Usr'
+define service ZVKS_SD_Flights_V1 {
+  expose ZVKS_C_Connection_R_Usr as Connection;
+  expose ZVKS_C_Flight_R_Usr as Flight;
+}
